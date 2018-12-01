@@ -7,8 +7,10 @@ using System.Web;
 
 namespace TravelCompany.Models
 {
+    [Table("Tbl_Reservation")]
     public class Reservation
     {
+
         public Reservation()
         {
             this.Id = Guid.NewGuid();
