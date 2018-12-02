@@ -24,7 +24,10 @@
             @Html.DisplayNameFor(model => model.DateOfHire)
         </th>
         <th>
-            Ancienetee
+            Seniority
+        </th>
+        <th>
+            Credit
         </th>
         <th></th>
     </tr>
@@ -44,12 +47,15 @@
             @Html.DisplayFor(modelItem => item.DateOfHire)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.YearsInCompany)
+            @Html.DisplayFor(modelItem => item.Seniority)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.Credit)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }

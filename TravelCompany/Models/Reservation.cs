@@ -23,15 +23,15 @@ namespace TravelCompany.Models
 
 
         //[Index("UniciteInscription", IsUnique =true)]
-       // [ForeignKey("Employee")]
+        // [ForeignKey("Employee")]
         //public Guid IdEmploye { get; set; }
 
         //[Index("UniciteVoyage", IsUnique = true)]
         //[ForeignKey("Voyage")]
         //public Guid IdVoyage { get; set; }
-
+        [Display(Name = "Employee")]
         public virtual Employee Employee { get; set; }
-
+        [Display(Name = "Destination")]
         public virtual Voyage Voyage { get; set; }
     }
 }

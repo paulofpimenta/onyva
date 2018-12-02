@@ -131,18 +131,18 @@ namespace TravelCompany.Models
                 Employee = E4
             };
 
-            //var R7 = new Reservation
-            //{
-            //    ValidationState = ReservationStateEnum.InProgress,
-            //    Voyage = V5,
-            //    Employee = E5
-            //};
-            //var R8= new Reservation
-            //{
-            //    ValidationState = ReservationStateEnum.InProgress,
-            //    Voyage = V5,
-            //    Employee = E6
-            //};
+            var R7 = new Reservation
+            {
+                ValidationState = ReservationStateEnum.InProgress,
+                Voyage = V5,
+                Employee = E5
+            };
+            var R8= new Reservation
+            {
+                ValidationState = ReservationStateEnum.InProgress,
+                Voyage = V5,
+                Employee = E6
+            };
             
 
             context.Reservations.Add(R1);
@@ -151,7 +151,9 @@ namespace TravelCompany.Models
             context.Reservations.Add(R4);
             context.Reservations.Add(R5);
             context.Reservations.Add(R6);
-            //context.Reservations.Add(R7);
+            context.Reservations.Add(R7);
+            context.Reservations.Add(R8);
+
 
             // Save changes to DB
             changes = context.ChangeTracker.Entries().ToList();
