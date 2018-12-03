@@ -1,7 +1,7 @@
 ﻿@model TravelCompany.Models.Reservation
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add a new reservation";
 }
 
 <h2>Create</h2>
@@ -21,6 +21,10 @@
                 @Html.EnumDropDownListFor(model => model.ValidationState, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ValidationState, "", new { @class = "text-danger" })
             </div>
+
+
+
+
         </div>
 
         <div class="form-group">

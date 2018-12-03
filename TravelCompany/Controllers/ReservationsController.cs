@@ -17,6 +17,7 @@ namespace TravelCompany.Controllers
         // GET: Reservations
         public ActionResult Index()
         {
+
             return View(db.Reservations.Include(c=>c.Employee).Include(c=>c.Voyage).ToList());
         }
 

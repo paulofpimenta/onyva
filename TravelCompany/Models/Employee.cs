@@ -24,7 +24,7 @@ namespace TravelCompany.Models
             [Display(Name = "Employee's name")]
             [RegularExpression("[A-Z][a-z]{1,49}")]
             [MaxLength(50)]
-            public string Nom { get; set; }
+            public string Name { get; set; }
 
 
             [Required]
@@ -41,14 +41,25 @@ namespace TravelCompany.Models
             [Display(Name = "Date of hire")]
             public DateTime DateOfHire { get; set; }
 
+            [Display(Name = "Seniority")]
             [NotMapped]
-            public int YearsInCompany {
+            public int Seniority
+            {
             get {
                 return DateTime.Now.Year - this.DateOfHire.Year;
             }
             }
 
-        public virtual ICollection<Reservation> Reservations { get; set; }
+            [Display(Name = "Credit left")]
+            [NotMapped]
+            public int Credit{
+            get
+            {
+                return this.Seniority / 3;
+            }
+            }
+
+            public virtual ICollection<Reservation> Reservations { get; set; }
 
         }
 }

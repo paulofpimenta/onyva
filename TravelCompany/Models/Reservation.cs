@@ -7,8 +7,10 @@ using System.Web;
 
 namespace TravelCompany.Models
 {
+    [Table("Tbl_Reservation")]
     public class Reservation
     {
+
         public Reservation()
         {
             this.Id = Guid.NewGuid();
@@ -20,16 +22,16 @@ namespace TravelCompany.Models
         public ReservationStateEnum? ValidationState { get; set; }
 
 
-        [Index("UniciteInscription", IsUnique =true)]
-        [ForeignKey("Employee")]
-        public Guid IdEmploye { get; set; }
+        //[Index("UniciteInscription", IsUnique =true)]
+        // [ForeignKey("Employee")]
+        //public Guid IdEmploye { get; set; }
 
-        [Index("UniciteVoyage", IsUnique = true)]
-        [ForeignKey("Voyage")]
-        public Guid IdVoyage { get; set; }
-
+        //[Index("UniciteVoyage", IsUnique = true)]
+        //[ForeignKey("Voyage")]
+        //public Guid IdVoyage { get; set; }
+        [Display(Name = "Employee")]
         public virtual Employee Employee { get; set; }
-
+        [Display(Name = "Destination")]
         public virtual Voyage Voyage { get; set; }
     }
 }

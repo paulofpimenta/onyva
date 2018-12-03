@@ -27,16 +27,19 @@ namespace TravelCompany.Models
         [MaxLength(50)]
         public string Destination { get; set; }
 
-        [Range(11, 100, ErrorMessage = "{} must be beteween {1} and {2}")]
+        [Display(Name = "Maximum number of travelers")]
+        //[Range(11, 100, ErrorMessage = "{} must be beteween {1} and {2}")]
         public int MaxNumVoyagers { get; set; }
 
-        [Display(Name = "Date of voyage")]
+        [Display(Name = "Date of the travel")]
         [Column(TypeName = "datetime2")]
         public DateTime DateOfVoyage { get; set; }
 
-        [Display(Name = "State of voyage")]
+        [Display(Name = "State")]
         public bool IsAvailable { get; set; }
 
         public virtual ICollection<Reservation> Reservations { get; set; }
+
+
     }
 }
