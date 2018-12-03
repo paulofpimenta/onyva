@@ -38,7 +38,13 @@ namespace TravelCompany.Models
         [Display(Name = "State")]
         public bool IsAvailable { get; set; }
 
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public bool HasEmployee(Employee e)
+        {
+            return this.Reservations.Any(c => c.Employee == e);
+        }
+
+
+    public virtual ICollection<Reservation> Reservations { get; set; }
 
 
     }

@@ -59,7 +59,12 @@ namespace TravelCompany.Models
             }
             }
 
-            public virtual ICollection<Reservation> Reservations { get; set; }
+        public bool IsInVoyage(Voyage v)
+        {
+            return this.Reservations.Any(c => c.Voyage == v);
+        }
+
+               public virtual ICollection<Reservation> Reservations { get; set; }
 
         }
 }

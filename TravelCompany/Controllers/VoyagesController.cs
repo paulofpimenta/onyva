@@ -116,6 +116,22 @@ namespace TravelCompany.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Passengers(Guid id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Voyage voyage = db.Voyages.Find(id);
+            if (voyage == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Voyage = voyage;
+            return View(db.Employees.ToList());
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

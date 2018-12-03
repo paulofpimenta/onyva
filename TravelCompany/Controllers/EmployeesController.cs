@@ -124,5 +124,49 @@ namespace TravelCompany.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Reservations(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Employee = employee;
+            return View(db.Voyages.ToList());
+        }
+
+        public ActionResult Subscribre(Guid idVoyage, Guid idEmployee)
+        {
+            // Creation d'un objet Inscriptio
+            var ReservationToAdd = new Reservation
+            {
+                Employee = db.Employees.Find(idEmployee),
+                Voyage = db.Voyages.Find(idVoyage),
+                ValidationState = ReservationStateEnum.InProgress
+            };
+            if (ReservationToAdd != null)
+            {
+                db.Reservations.Add(ReservationToAdd);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Reservations", new { id = idEmployee });
+        }
+
+        public ActionResult Unscribre(Guid idVoyage, Guid idEmployee)
+        {
+            var ReservationToDelete = db.Reservations.FirstOrDefault(c => c.Voyage.Id == idVoyage && c.Employee.Id == idEmployee);
+            if (ReservationToDelete != null)
+            {
+                db.Reservations.Remove(ReservationToDelete);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Reservations" , new { id = idEmployee  });
+        }
     }
 }

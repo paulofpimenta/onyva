@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TravelCompany.Models.Voyage>
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<h2>Reservations for @ViewBag.Employee.Name</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxNumVoyagers)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfVoyage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxNumVoyagers)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfVoyage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAvailable)
+        </td>
+        <td>
+            @if (!ViewBag.Employee.IsInVoyage(item))
+            {
+                @Html.ActionLink("Subscribre", "Subscribre", new { idVoyage = item.Id, idEmployee = ViewBag.Employee.Id })
+            }else
+            {
+                @Html.ActionLink("Unscribre", "Unscribre", new { idVoyage = item.Id, idEmployee = ViewBag.Employee.Id })
+            }
+
+
+        </td>
+    </tr>
+}
+
+</table>

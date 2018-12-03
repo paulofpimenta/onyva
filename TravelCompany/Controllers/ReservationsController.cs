@@ -72,6 +72,8 @@ namespace TravelCompany.Controllers
             {
                 return HttpNotFound();
             }
+            List<Employee> EmpList = db.Employees.ToList();
+            ViewBag.ListOfValidEmployees = EmpList.Select(x => x.Credit >= 1).ToList();
             return View(reservation);
         }
 
@@ -125,5 +127,6 @@ namespace TravelCompany.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
