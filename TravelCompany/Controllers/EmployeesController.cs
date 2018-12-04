@@ -35,6 +35,13 @@ namespace TravelCompany.Controllers
             return View(employee);
         }
 
+        [HttpGet]
+        public PartialViewResult DetailsPartial(Guid? id)
+        {
+            Employee employee = db.Employees.Find(id);
+            return View(employee);
+        }
+
         // GET: Employees/Create
         public ActionResult Create()
         {
@@ -142,6 +149,7 @@ namespace TravelCompany.Controllers
 
         public ActionResult Subscribre(Guid idVoyage, Guid idEmployee)
         {
+
             // Creation d'un objet Inscriptio
             var ReservationToAdd = new Reservation
             {

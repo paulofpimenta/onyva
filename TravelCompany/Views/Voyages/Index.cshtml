@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1>Destinations</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    Here's an interactive map with possible destinations to travel
+
+    <div id="mapid"></div>
 </p>
+
 <div class="container">
     <table class="table">
         <tr>
@@ -40,10 +43,10 @@
                     @Html.DisplayFor(modelItem => item.DateOfVoyage)
                 </td>
                 <td>
-                    @Html.DisplayName(item.IsAvailable? "yes" : "no")
+                    @Html.DisplayName(item.IsAvailable ? "yes" : "no")
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id },null) |
                     @Html.ActionLink("List of Passengers", "Passengers", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
@@ -51,7 +54,7 @@
         }
     </table>
     <div class="text-right">
-        <button type="button" class="btn btn-dark">Add destination</button>
+        <button type="submit" class="btn btn-dark">Add destination</button>
     </div>
 </div>
 

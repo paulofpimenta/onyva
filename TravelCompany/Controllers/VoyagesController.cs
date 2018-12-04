@@ -123,6 +123,14 @@ namespace TravelCompany.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Voyage voyage = db.Voyages.Find(id);
+            // List of reservations per voyage
+            ViewBag.Reservations = db.Reservations
+                         .Where(item => item.Voyage.Id == id)
+                         .ToList();
+            if (ViewBag.Reservations == null)
+            {
+                return HttpNotFound();
+            }
             if (voyage == null)
             {
                 return HttpNotFound();
@@ -130,6 +138,52 @@ namespace TravelCompany.Controllers
             ViewBag.Voyage = voyage;
             return View(db.Employees.ToList());
 
+        }
+
+        public ActionResult AddPassenger(Guid idVoyage, Guid idEmployee)
+        {
+
+            // Creation d'un objet Inscriptio
+            var ReservationToAdd = new Reservation
+            {
+                Employee = db.Employees.Find(idEmployee),
+                Voyage = db.Voyages.Find(idVoyage),
+                ValidationState = ReservationStateEnum.InProgress
+            };
+            if (ReservationToAdd != null)
+            {
+                db.Reservations.Add(ReservationToAdd);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Passengers", new { id = idVoyage });
+        }
+
+        public ActionResult RemovePassenger(Guid idVoyage, Guid idEmployee)
+        {
+            var ReservationToDelete = db.Reservations.FirstOrDefault(c => c.Voyage.Id == idVoyage && c.Employee.Id == idEmployee);
+            if (ReservationToDelete != null)
+            {
+                db.Reservations.Remove(ReservationToDelete);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Passengers", new { id = idVoyage });
+        }
+
+        public ActionResult ValidateVoyage(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Voyage voyage = db.Voyages.Find(id);
+            if (voyage == null)
+            {
+                return HttpNotFound();
+            }
+            // Send a viewbag
+            ViewBag.EmployeesInTrip = db.Reservations.Include(c => c.Employee).Where(c => c.Employee.Seniority >0);
+            return View(voyage);
         }
 
         protected override void Dispose(bool disposing)

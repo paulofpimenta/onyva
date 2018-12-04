@@ -1,8 +1,13 @@
 body {
-	padding-top: 50px;
-	color: #959595;
-	}
-	
+    padding-top: 50px;
+    color: #959595;
+    font-family: 'Text Me One', sans-serif;
+}
+
+#mapid {
+    height: 180px;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	color: black;
 	}
