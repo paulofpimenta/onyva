@@ -36,10 +36,9 @@ namespace TravelCompany.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult DetailsPartial(Guid? id)
+        public PartialViewResult DetailsPartial()
         {
-            Employee employee = db.Employees.Find(id);
-            return View(employee);
+            return PartialView();
         }
 
         // GET: Employees/Create
