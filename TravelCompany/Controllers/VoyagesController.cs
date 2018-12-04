@@ -123,6 +123,39 @@ namespace TravelCompany.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Voyage voyage = db.Voyages.Find(id);
+            if (voyage == null)
+            {
+                return HttpNotFound();
+            }
+            // List of reservations per voyage
+            List<Reservation> reservations = db.Reservations.ToList();
+            // List of Passagers per voyage
+            if (reservations == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Voyage = voyage;
+            ViewBag.ReservationsToBeValidated = reservations
+                         .Where(item => item.Voyage.Id == id)
+                         .ToList();
+            ViewBag.ReservationsNotToValidated = reservations
+                         .Where(item => item.Voyage.Id != id)
+                         .ToList();
+            return View(db.Employees.ToList());
+
+        }
+
+
+        public ActionResult PassengersInTravel(Guid id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Voyage voyage = db.Voyages.Find(id);
+            var employesInTravel = db.Employees.Where(e=> e.IsInVoyage(voyage));
+
             // List of reservations per voyage
             ViewBag.Reservations = db.Reservations
                          .Where(item => item.Voyage.Id == id)

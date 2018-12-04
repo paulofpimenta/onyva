@@ -7,6 +7,13 @@
 #mapid {
     height: 480px;
 }
+.panel-default {
+    border-color: black;
+}
+
+.panel-primary {
+    border-color: black;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

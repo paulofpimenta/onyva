@@ -7,11 +7,11 @@
 <h2 class="text-center">Passagers List for @ViewBag.Voyage.Destination</h2>
 
 
-<div class="container ">
+<div class="row">
 
     <div class="container col-md-6">
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">Subscribed</div>
             <div class="panel-body">
                 @foreach (var item in Model)
@@ -19,8 +19,12 @@
                     if (ViewBag.Voyage.HasEmployee(item))
                     {
 
-                        <p style="float:left">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname) </p>
-                        <p style="float:right">@Html.ActionLink("Unscribe", "RemovePassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id },null)</p>
+                        <p style="float:left"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong> </p>
+                        <p style="float:right">
+                            <!--Add a if to change the button if validated-->
+                            <button type="button" value="Upload" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("ValidateReservation", "Reservation", new { id = item.Id })'">Validate</button>
+                            <button type="button" value="Upload" class="btn btn-sm btn-default" onclick="location.href='@Url.Action("RemovePassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Unscribe</button>
+                        </p>
                         <br /><hr />
                     }
 
@@ -37,12 +41,13 @@
                 {
                     if (!ViewBag.Voyage.HasEmployee(item))
                     {
-                        <p style="float:left">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname) </p>
-                        <p style="float:right">@Html.ActionLink("Subscribe", "AddPassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id },null)</p>
-                        <!-- <p style="float:right">@Html.ActionLink("Details", "Details", "Voyages", new { id = item.Id },null)</p>-->
-                        <p @Ajax.ActionLink("Open popup", "SomeAction" , new AjaxOptions { HttpMethod="GET" , UpdateTargetId="result" , InsertionMode=InsertionMode.Replace, OnSuccess="openPopup" })<br />
+                        <p style="float:left"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong> </p>
+                        <p style="float:right">
+                            <button type="button" value="Upload" class="btn btn-sm btn-success" onclick="location.href='@Url.Action("Details", "Employees", new { id = item.Id })'">Details</button>
+                            <button type="button" value="Upload" class="btn btn-sm btn-primary" onclick="location.href='@Url.Action("AddPassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Suscribe</button>
+                        </p>
                         <br /><hr />
-                   }
+                    }
 
                 }
             </div>
@@ -51,62 +56,67 @@
 </div>
     <div class="container">
         <h4>Travel's details</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                City : 
-            </dt>
+        <hr style="height:1px;border:none;color:#333;background-color:#333" />
+            <dl class="dl-horizontal">
+        <dt>
+            City :
+        </dt>
 
-            <dd>
-                @Html.Raw(ViewBag.Voyage.Destination)
-            </dd>
+        <dd>
+            @Html.Raw(ViewBag.Voyage.Destination)
+        </dd>
 
-            <dt>
-                Max Number of travelers : 
-            </dt>
+        <dt>
+            Places left :
+        </dt>
 
-            <dd>
-                @Html.Raw(ViewBag.Voyage.MaxNumVoyagers)
-            </dd>
+        <dd>
+            <div class="progress" style="width: 20%">
+                @(ViewBag.Voyage.MaxNumVoyagers - ViewBag.ReservationsToBeValidated.Count)
+                <div class="progress-bar" role="progressbar" style="width: @(ViewBag.ReservationsToBeValidated.Count * 100 / ViewBag.Voyage.MaxNumVoyagers)%;">
+                </div>
+            </div>
+        </dd>
 
-            <dt>
-                Date of travel : 
-            </dt>
+        <dt>
+            Date of travel :
+        </dt>
 
-            <dd>
-                @Html.Raw(ViewBag.Voyage.DateOfVoyage)
-            </dd>
+        <dd>
+            @Html.Raw(ViewBag.Voyage.DateOfVoyage)
+        </dd>
 
-            <dt>
-               Avaiability : 
-            </dt>
+        <dt>
+            Avaiability :
+        </dt>
 
-            <dd>
-                @(ViewBag.Voyage.IsAvailable ? "Yes" : "No")
-            </dd>
+        <dd>
+            @(ViewBag.Voyage.IsAvailable ? "Yes" : "No")
+        </dd>
 
-            <dt>
-                Validation State :
-            </dt>
-
-            <dd>
-                @(ViewBag.Voyage.IsAvailable ? "Yes" : "No")
-            </dd>
-
-        </dl>
-    </div>
-
-    @foreach (var item in Model)
-    {
-        <p>@item.Name + @item.Salary  +  @item.Seniority</p>
-    }
-
-    @foreach (var reservation in @ViewBag.Reservations)
-    {
-        <p>@reservation.Id</p>
-    }
-
+    </dl>
     <div class="text-right">
-        <button type="button" value="Upload" class="btn btn-light" 
-                onclick="@Url.Action("ValidateVoyage", "Voyages",new { id = ViewBag.Voyage.Id })''"> Validate reservation</button>
+        <input type="submit" onclick="location.href='@Url.Action("Edit", "Reservations",new { id = ViewBag.ReservationsToBeValidated})'" value="test" />
+        <button type="button" value="Upload" class="btn btn-light"
+                onclick="@Url.Action("Edit", "Reservations")''">
+            Validate reservation
+        </button>
     </div>
+</div>
+        
+
+        @foreach (var item in Model)
+        {
+            <p>@item.Name + @item.Salary  +  @item.Seniority</p>
+        }
+
+        @foreach (var reservation in @ViewBag.ReservationsToBeValidated)
+        {
+            <h4>Reservation Id to validate : <p>@reservation.Id @reservation.ValidationState</p></h4>
+        }
+
+        @foreach (var reservation in @ViewBag.ReservationsNotToValidated)
+        {
+            <h4>Reservation Id to ignore :<p>@reservation.Id @reservation.ValidationState</p></h4>
+        }
+

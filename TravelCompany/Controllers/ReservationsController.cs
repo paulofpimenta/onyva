@@ -118,6 +118,21 @@ namespace TravelCompany.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Reservations/Delete/5
+        public ActionResult ValidateReservation(Guid? idReservation, Guid? idVoyage, Employee e)
+        {
+            if (idReservation == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservation reservation = db.Reservations.Find(idReservation);
+            if (reservation == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Passengers", new { id = idVoyage });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
