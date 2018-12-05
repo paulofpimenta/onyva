@@ -22,7 +22,9 @@
                         <p style="float:left"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong> </p>
                         <p style="float:right">
                             <!--Add a if to change the button if validated-->
-                            <button type="button" value="Upload" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("ValidateReservation", "Reservation", new { id = item.Id })'">Validate</button>
+                            
+                            <button type="button" value="Upload" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("ValidateReservation", "Reservations",
+                                                                                                                      new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Validate</button>
                             <button type="button" value="Upload" class="btn btn-sm btn-default" onclick="location.href='@Url.Action("RemovePassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Unscribe</button>
                         </p>
                         <br /><hr />
@@ -110,13 +112,7 @@
             <p>@item.Name + @item.Salary  +  @item.Seniority</p>
         }
 
-        @foreach (var reservation in @ViewBag.ReservationsToBeValidated)
+       @foreach (var reservation in @ViewBag.ReservationsToBeValidated)
         {
-            <h4>Reservation Id to validate : <p>@reservation.Id @reservation.ValidationState</p></h4>
+         <h4>Reservation Id to validate : </h4> <p>@reservation.Id @reservation.ValidationState</p>
         }
-
-        @foreach (var reservation in @ViewBag.ReservationsNotToValidated)
-        {
-            <h4>Reservation Id to ignore :<p>@reservation.Id @reservation.ValidationState</p></h4>
-        }
-

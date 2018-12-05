@@ -119,18 +119,25 @@ namespace TravelCompany.Controllers
         }
 
         // GET: Reservations/Delete/5
-        public ActionResult ValidateReservation(Guid? idReservation, Guid? idVoyage, Employee e)
+        public ActionResult ValidateReservation(Guid? idVoyage, Guid? idEmployee)
         {
-            if (idReservation == null)
+            if (idVoyage == null || idEmployee == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = db.Reservations.Find(idReservation);
+            var reservation = db.Reservations.Where(c => c.Employee.Id == idEmployee && c.Voyage.Id == idVoyage);
+            //var idReservation = reservation.Id;
             if (reservation == null)
             {
                 return HttpNotFound();
             }
-            return RedirectToAction("Passengers", new { id = idVoyage });
+            var voyage = db.Voyages.Find(idVoyage);
+            var employee = db.Employees.Find(idEmployee);
+
+            // Validation rules
+
+            return Content("<html><body> id voyage : " + idVoyage + "id emplooye : " + idEmployee + "</body></html>", "text/html");
+            //return RedirectToAction("Edit", new { id = idVoyage });
         }
 
         protected override void Dispose(bool disposing)
