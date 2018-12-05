@@ -126,6 +126,8 @@ namespace TravelCompany.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var reservation = db.Reservations.Where(c => c.Employee.Id == idEmployee && c.Voyage.Id == idVoyage);
+            
+            // Make a select with LINQ
             //var idReservation = reservation.Id;
             if (reservation == null)
             {
