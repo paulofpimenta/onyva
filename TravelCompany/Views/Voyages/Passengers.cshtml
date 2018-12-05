@@ -15,14 +15,17 @@
             <div class="panel-heading">Subscribed</div>
             <div class="panel-body">
                 @foreach (var item in Model)
-                {
+                    {
                     if (ViewBag.Voyage.HasEmployee(item))
                     {
-
+                        Guid IdReservation = new Guid();
+                        foreach (var reservation in ViewBag.ReservationsToBeValidated)
+                        {
+                            IdReservation = reservation.Id;
+                        }
                         <p style="float:left"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong> </p>
                         <p style="float:right">
                             <!--Add a if to change the button if validated-->
-                            
                             <button type="button" value="Upload" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("ValidateReservation", "Reservations",
                                                                                                                       new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Validate</button>
                             <button type="button" value="Upload" class="btn btn-sm btn-default" onclick="location.href='@Url.Action("RemovePassenger", "Voyages", new { idVoyage = ViewBag.Voyage.Id, idEmployee = item.Id })'">Unscribe</button>
@@ -97,22 +100,24 @@
         </dd>
 
     </dl>
-    <div class="text-right">
+    @*<div class="text-right">
         <input type="submit" onclick="location.href='@Url.Action("Edit", "Reservations",new { id = ViewBag.ReservationsToBeValidated})'" value="test" />
         <button type="button" value="Upload" class="btn btn-light"
                 onclick="@Url.Action("Edit", "Reservations")''">
             Validate reservation
         </button>
     </div>
+    *@
 </div>
         
+        @*
+     @foreach (var item in Model)
+     {
+         <p>@item.Name + @item.Salary  +  @item.Seniority</p>
+     }
 
-        @foreach (var item in Model)
-        {
-            <p>@item.Name + @item.Salary  +  @item.Seniority</p>
-        }
-
-       @foreach (var reservation in @ViewBag.ReservationsToBeValidated)
-        {
-         <h4>Reservation Id to validate : </h4> <p>@reservation.Id @reservation.ValidationState</p>
-        }
+    @foreach (var reservation in @ViewBag.ReservationsToBeValidated)
+     {
+      <h4>Reservation Id to validate : </h4> <p>@reservation.Id @reservation.ValidationState</p>
+     }
+        *@

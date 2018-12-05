@@ -126,10 +126,12 @@ namespace TravelCompany.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var reservation = db.Reservations.Where(c => c.Employee.Id == idEmployee && c.Voyage.Id == idVoyage);
-            
+
             // Make a select with LINQ
             //var idReservation = reservation.Id;
-            if (reservation == null)
+            var Reservation = db.Reservations.FirstOrDefault(c => c.Employee.Id == idEmployee && c.Voyage.Id == idVoyage);
+
+            if (Reservation == null)
             {
                 return HttpNotFound();
             }
@@ -138,8 +140,8 @@ namespace TravelCompany.Controllers
 
             // Validation rules
 
-            return Content("<html><body> id voyage : " + idVoyage + "id emplooye : " + idEmployee + "</body></html>", "text/html");
-            //return RedirectToAction("Edit", new { id = idVoyage });
+            //return Content("<html><body> id voyage : " + idVoyage + " id resev: " + Reservation.Id + " id emplooye : " + idEmployee + "</body></html>", "text/html");
+            return RedirectToAction("Edit", new { id = Reservation.Id });
         }
 
         protected override void Dispose(bool disposing)

@@ -128,20 +128,20 @@ namespace TravelCompany.Controllers
                 return HttpNotFound();
             }
             // List of reservations per voyage
-            List<Reservation> reservations = db.Reservations.ToList();
+            var reservations = db.Reservations.ToList();
             // List of Passagers per voyage
             if (reservations == null)
             {
                 return HttpNotFound();
             }
+            var employeeReservation = db.Employees.Where(e => e.IsInVoyage(voyage));
 
             ViewBag.Voyage = voyage;
             ViewBag.ReservationsToBeValidated = reservations
                          .Where(item => item.Voyage.Id == id)
                          .ToList();
-            ViewBag.ReservationsNotToValidated = reservations
-                         .Where(item => item.Voyage.Id != id)
-                         .ToList();
+            ViewBag.EmployesSubscribed = db.Employees.Where(e => e.IsInVoyage(voyage));
+
             return View(db.Employees.ToList());
 
         }
@@ -155,6 +155,7 @@ namespace TravelCompany.Controllers
             }
             Voyage voyage = db.Voyages.Find(id);
             var employesInTravel = db.Employees.Where(e=> e.IsInVoyage(voyage));
+
 
             // List of reservations per voyage
             ViewBag.Reservations = db.Reservations
